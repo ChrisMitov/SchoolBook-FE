@@ -1,0 +1,99 @@
+﻿<div class="col-md-10" style="margin-top: 150px">
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-8">
+        <img src="assets/autograph-book-clipart-14.png" class="card-img-top" alt="image">
+      </div>
+      <div class="col-md-4" *ngIf="!showRegister">
+        <div class="card-body">
+          <h3>Schoolbook login:</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" formControlName="username" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">Username is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" formControlName="password" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+              </div>
+            </div>
+            <button [disabled]="loading" class="btn btn-primary">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Login
+            </button>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+          </form>
+        </div>
+        <div class="card-body">
+          <button [disabled]="loading" class="btn btn-info" (click)="register()">
+            Register
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="showRegister">
+        <div class="card-body">
+          <form [formGroup]="registerForm">
+            <div class="form-group">
+              <label for="username">Name</label>
+              <input type="text" formControlName="name" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && r.username.errors }"/>
+              <div *ngIf="submitted && r.name.errors" class="invalid-feedback">
+                <div *ngIf="r.name.errors.required">Name is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" formControlName="username" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && r.username.errors }"/>
+              <div *ngIf="submitted && r.username.errors" class="invalid-feedback">
+                <div *ngIf="r.username.errors.required">Username is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" formControlName="password" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && r.password.errors }"/>
+              <div *ngIf="submitted && r.password.errors" class="invalid-feedback">
+                <div *ngIf="r.password.errors.required">Password is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="station-text2" class="col-form-label">User type: </label>
+              <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-outline-primary"
+                        id="dropdownMenu1"
+                        ngbDropdownToggle>
+                  {{userRole}}
+                </button>
+                <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+                  <div *ngFor="let role of roles">
+                    <button class="dropdown-item" id="option" on-click="changeRole(role)">{{role}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button [disabled]="loading" class="btn btn-primary" (click)="onSubmitRegister()">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Register
+            </button>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+          </form>
+        </div>
+        <div class="card-body">
+          <button [disabled]="loading" class="btn btn-info" (click)="login()">
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

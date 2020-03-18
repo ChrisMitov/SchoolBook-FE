@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let school of schools; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ school.name }}</td>
+          <td>{{school.address}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="showInfo(school.id)" placement="top"
+                    ngbTooltip="Show employees"><i class="fa fa-eye" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-warning" (click)="updateSchool(school, content)" placement="top"
+                    ngbTooltip="Update school"><i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="delete(school.id)"
+                    placement="top" ngbTooltip="Delete school"><i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3 offset-md-2">
+      <form>
+        <div class="form-group">
+          <label for="station-name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="station-name" [(ngModel)]="newSchool.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Address:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="newSchool.address" name="model"/>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addSchool()">Add new school</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <form>
+        <div class="form-group">
+          <label for="station-name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="station-name" [(ngModel)]="chosenSchool.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Address:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="chosenSchool.address" name="model"/>
+        </div>
+        <button type="button" class="btn btn-info float-right" (click)="saveSchool()">Update school</button>
+      </form>
+    </form>
+  </div>
+</ng-template>

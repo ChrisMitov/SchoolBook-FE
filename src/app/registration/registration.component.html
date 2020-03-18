@@ -1,0 +1,177 @@
+<ngb-tabset>
+  <ngb-tab title="Director">
+    <ng-template ngbTabContent>
+      <form>
+        <div class="form-group">
+          <label for="station-name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="station-name" [(ngModel)]="director.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Username:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="director.username" name="model"/>
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Password:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="director.password" name="password"
+                 type="password"/>
+        </div>
+        <div class="form-group">
+          <label for="station-text2" class="col-form-label">User type: </label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle>
+              {{director.school != null ? director.school.name : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let school of schools">
+                <button class="dropdown-item" id="option"
+                        on-click="changeSchool(school, director)">{{school.name}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addDirector()">Add new school</button>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Teacher">
+    <ng-template ngbTabContent>
+    <form>
+      <div class="form-group">
+        <label for="station-name" class="col-form-label">Name:</label>
+        <input type="text" class="form-control" id="station-name" [(ngModel)]="teacher.name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Username:</label>
+        <input class="form-control" id="message-text" [(ngModel)]="teacher.username" name="model"/>
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Password:</label>
+        <input class="form-control" id="message-text" [(ngModel)]="teacher.password" name="password" type="password"/>
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose school: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{teacher.school != null ? teacher.school.name : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let school of schools">
+              <button class="dropdown-item" id="option2"
+                      on-click="changeSchool(school, teacher)">{{school.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="options-subject" class="col-form-label">Choose subject: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{teacher.subject != null ? teacher.subject : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options-subject" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let subject of subjects">
+              <button class="dropdown-item" id="options-subject2"
+                      on-click="changeSubject(subject, teacher)">{{subject}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addTeacher()">Add new teacher</button>
+    </form>
+  </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Parent">
+    <ng-template ngbTabContent>
+      <form>
+        <div class="form-group">
+          <label for="station-name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="station-name" [(ngModel)]="parent.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Username:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="parent.username" name="model"/>
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Password:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="parent.password" name="password"
+                 type="password"/>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addParent()">Add new parent</button>
+      </form>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Student">
+    <ng-template ngbTabContent>
+      <form>
+        <div class="form-group">
+          <label for="station-name" class="col-form-label">Name:</label>
+          <input type="text" class="form-control" id="station-name" [(ngModel)]="student.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Username:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="student.username" name="model"/>
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">Password:</label>
+          <input class="form-control" id="message-text" [(ngModel)]="student.password" name="password"
+                 type="password"/>
+        </div>
+        <div class="form-group">
+          <label for="station-text2" class="col-form-label">Choose school: </label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle>
+              {{student.school != null ? student.school.name : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let school of schools">
+                <button class="dropdown-item" id="option"
+                        on-click="changeSchool(school, student)">{{school.name}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="station-text2" class="col-form-label">Choose parent: </label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle>
+              {{student.parent != null ? student.parent.name : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let parent1 of parents">
+                <button class="dropdown-item" id="option"
+                        on-click="changeParent(parent1)">{{parent1.name}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="station-text2" class="col-form-label">Choose class: </label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle>
+              {{student.classNumber != null ? student.classNumber : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let class1 of classes">
+                <button class="dropdown-item" id="option"
+                        on-click="changeClass(class1)">{{class1}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addStudent()">Add new student</button>
+      </form>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

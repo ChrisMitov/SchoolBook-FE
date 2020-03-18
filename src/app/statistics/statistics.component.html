@@ -1,0 +1,57 @@
+<ngb-tabset (tabChange)="onTabChange($event)">
+  <ngb-tab title="All Schools" (click)="allSchools()">
+    <ng-template ngbTabContent>
+      <div class="col">
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="By subjects">
+    <ng-template ngbTabContent>
+      <form>
+        <div class="form-group">
+          <label for="station-name" class="col-form-label">Subject:</label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle>
+              {{chosenSubject != null ? chosenSubject : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let subject of subjects">
+                <button class="dropdown-item" id="option" on-click="changeSubject(subject)">{{subject}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="col">
+        <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="By school">
+    <ng-template ngbTabContent>
+      <form>
+        <div class="form-group">
+          <label for="school-name" class="col-form-label">School:</label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu"
+                    ngbDropdownToggle>
+              {{chosenSchool != null ? chosenSchool.name : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let school of schools">
+                <button class="dropdown-item" id="option" on-click="changeSchool(school)">{{school.name}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="col">
+        <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>

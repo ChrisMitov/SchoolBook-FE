@@ -1,0 +1,170 @@
+<div class="container" style="margin-top: 100px">
+  <div class="row">
+    <div class="col-md-4">
+      <img class="img-responsive" src="assets/good-grades.png" alt="" style="width: 100%"/>
+    </div>
+    <div class="col-md-6" *ngIf="isStudent">
+      <div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Grade</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let grade of grades; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ grade.subject }}</td>
+            <td>{{grade.grade}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-7" *ngIf="isTeacher || isAdmin">
+      <div *ngIf="isTeacher || isAdmin">
+        <div class="form-group">
+          <label for="station-text2" class="col-form-label">Choose student: </label>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary"
+                    id="dropdownMenu1"
+                    ngbDropdownToggle>
+              {{target.name != null ? target.name : "N/A"}}
+            </button>
+            <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+              <div *ngFor="let student of students">
+                <button class="dropdown-item" id="option"
+                        on-click="changeStudent(student)">{{student.name}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade</th>
+              <th scope="col" colspan="2">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let grade of grades; index as i">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ grade.subject }}</td>
+              <td>{{grade.grade}}</td>
+              <td>
+                <button type="button" class="btn btn-warning" *ngIf="teacherSubject == grade.subject"
+                        (click)="openEditModal(content1, grade)"><i class="fa fa-pencil"
+                                                                    aria-hidden="true"></i></button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" (click)="delete(grade.id)"
+                        placement="top" ngbTooltip="Delete grade"><i class="fa fa-trash"
+                                                                               aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="offset-1 col-md-2" *ngIf="isTeacher || isAdmin">
+          <button type="button" class="btn btn-success" (click)="openModal(content)"><i class="fa fa-plus"
+                                                                                        aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add grade</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="station-name" class="col-form-label">Subject:</label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{newGrade.subject != null ? newGrade.subject : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let subject of subjects">
+              <button class="dropdown-item" id="option" on-click="changeSubject(subject)">{{subject}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Grade:</label>
+        <input class="form-control" id="message-text" [(ngModel)]="newGrade.grade" name="model" type="number" min="2" max="6" step="0.1" />
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose student: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{chosenStudent != null ? chosenStudent.name : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let student of students">
+              <button class="dropdown-item" id="option"
+                      on-click="changeGradeStudent(student)">{{student.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addGrade()">Add new grade</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #content1 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Change grade</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="station-name" class="col-form-label">Subject:</label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{newGrade.subject != null ? newGrade.subject : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let subject of subjects">
+              <button class="dropdown-item" id="option" on-click="changeSubject(subject)">{{subject}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message-text3" class="col-form-label">Grade:</label>
+        <input class="form-control" id="message-text3" [(ngModel)]="newGrade.grade" name="model" type="number"/>
+      </div>
+      <div class="form-group">
+        <label for="message-text2" class="col-form-label">For student: </label>
+        <input class="form-control" id="message-text2" [(ngModel)]="newGrade.user.name" name="sss" disabled/>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addGrade()">Change grade</button>
+    </form>
+  </div>
+</ng-template>

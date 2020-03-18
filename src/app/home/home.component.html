@@ -1,0 +1,35 @@
+﻿<div class="card" *ngIf="isTeacher">
+  <img src="assets/professional-development-tools-for-teachers.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Hello teacher, {{currentUser.username}}!</h5>
+    <p class="card-text">Here you can find all your students and you could add grades!</p>
+  </div>
+</div>
+
+<div class="card" *ngIf="isStudent">
+  <img src="assets/student.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Hello student, {{currentUser.username}}!</h5>
+    <p class="card-text">Here you can find your information about school!</p>
+  </div>
+</div>
+
+<div class="card" *ngIf="isAdmin">
+  <img src="assets/kessel-motors-432x720.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Hello admin, {{currentUser.username}}!</h5>
+    <p class="card-text">Here you can find your service station and you can add and remove employees!</p>
+  </div>
+</div>
+
+<div class="card" *ngIf="isDirector">
+  <div class="card-header">
+    <div class="col-md-6">
+      <img src="assets/school2.jpg" class="card-img-top " alt="...">
+    </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Hello director, {{currentUser.username}}!</h5>
+    <p class="card-text">Here you can manage your school!</p>
+  </div>
+</div>

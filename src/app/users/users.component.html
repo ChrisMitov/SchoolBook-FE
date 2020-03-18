@@ -1,0 +1,286 @@
+<ngb-tabset>
+  <ngb-tab title="Teacher">
+    <ng-template ngbTabContent>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">School</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let teacher of teachers; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ teacher.name  }}</td>
+          <td>{{teacher.school != null ? teacher.school.name : "N/A"}}</td>
+          <td>{{teacher.subject != null ? teacher.subject : "N/A"}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="changeTeacher(teacher, content1)"
+                    placement="top"
+                    ngbTooltip="Change"><i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="delete(teacher.id)"
+                    placement="top" ngbTooltip="Delete teacher"><i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Parent">
+    <ng-template ngbTabContent>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let parent of parents; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ parent.name  }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="changeParentProperties(parent, content2)"
+                    placement="top"
+                    ngbTooltip="Change"><i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-warning" (click)="showChildren(parent, content3)" placement="top"
+                    ngbTooltip="Show children"><i class="fa fa-eye" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="delete(parent.id)"
+                    placement="top" ngbTooltip="Delete parent"><i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Student">
+    <ng-template ngbTabContent>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">School</th>
+          <th scope="col">Parent</th>
+          <th scope="col">Class</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let student of students; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ student.name  }}</td>
+          <td>{{student.school != null ? student.school.name : "N/A"}}</td>
+          <td>{{student.parent != null ? student.parent.name : "N/A"}}</td>
+          <td>{{student.classNumber}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="changeStudent(student, content)" placement="top"
+                    ngbTooltip="Change"><i class="fa fa-pencil" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="delete(student.id)"
+                    placement="top" ngbTooltip="Delete student"><i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
+
+
+<ng-template #content3 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Parents children</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">School</th>
+        <th scope="col">Class</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of parentChildren; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ student.name  }}</td>
+        <td>{{student.school != null ? student.school.name : "N/A"}}</td>
+        <td>{{student.classNumber}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Close</button>
+  </div>
+</ng-template>
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Parent update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="station-name" class="col-form-label">Name:</label>
+        <input type="text" class="form-control" id="station-name" [(ngModel)]="chosenParent.name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Username:</label>
+        <input class="form-control" id="message-text" [(ngModel)]="chosenParent.username" name="model"/>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="updateParent()">Update Parent</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateParent()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Student update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="station-name" class="col-form-label">Name:</label>
+        <input type="text" class="form-control" id="station-name" [(ngModel)]="chosenStudent.name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Username:</label>
+        <input class="form-control" id="message-text" [(ngModel)]="chosenStudent.username" name="model"/>
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose school: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{chosenStudent.school != null ? chosenStudent.school.name : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let school of schools">
+              <button class="dropdown-item" id="option"
+                      on-click="changeSchool(school, chosenStudent)">{{school.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose parent: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{chosenStudent.parent != null ? chosenStudent.parent.name : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let parent1 of parents">
+              <button class="dropdown-item" id="option"
+                      on-click="changeParent(parent1)">{{parent1.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose class: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{chosenStudent.classNumber != null ? chosenStudent.classNumber : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let class1 of classes">
+              <button class="dropdown-item" id="option"
+                      on-click="changeClass(class1)">{{class1}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="updateStudent()">Update student</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateStudent()">Save</button>
+  </div>
+</ng-template>
+
+
+<ng-template #content1 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Teacher update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="station-name" class="col-form-label">Name:</label>
+        <input type="text" class="form-control" id="station-name" [(ngModel)]="chosenTeacher.name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="message-text" class="col-form-label">Username:</label>
+        <input class="form-control" id="message-text" [(ngModel)]="chosenTeacher.username" name="model"/>
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose school: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{chosenTeacher.school != null ? chosenTeacher.school.name : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let school of schools">
+              <button class="dropdown-item" id="option"
+                      on-click="changeSchool(school, chosenTeacher)">{{school.name}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="station-text2" class="col-form-label">Choose subject: </label>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary"
+                  id="dropdownMenu1"
+                  ngbDropdownToggle>
+            {{chosenTeacher.subject != null ? chosenTeacher.subject : "N/A"}}
+          </button>
+          <div class="dropdown-menu" id="options" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
+            <div *ngFor="let subject of subjects">
+              <button class="dropdown-item" id="option"
+                      on-click="changeSubject(subject)">{{subject}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="updateTeacher()">Update teacher</button>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateTeacher()">Save</button>
+  </div>
+</ng-template>
