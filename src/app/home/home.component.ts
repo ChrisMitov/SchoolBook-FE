@@ -24,7 +24,7 @@ export class HomeComponent {
   checkUser() {
     let role = localStorage.getItem('role');
     console.log(role);
-    this.isAdmin = role === "Admin";
+    this.isAdmin = role === "Parent";
     this.isStudent = role === "Student";
     this.isTeacher = role === "Teacher";
     this.isDirector = role == "Director";

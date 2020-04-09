@@ -21,6 +21,7 @@ export class GradesComponent implements OnInit {
   isStudent: boolean = false;
   isAdmin: boolean;
   teacherSubject: string;
+  isParent: boolean;
 
   constructor(private userService: UserService, private schoolService: SchoolService, private modalService: NgbModal) {
     this.target = new User();
@@ -59,6 +60,9 @@ export class GradesComponent implements OnInit {
       } else {
         this.userService.getAllStudents()
           .subscribe(data => {
+            if(this.isParent){
+              data = data.filter( student => student.parent.username == username)
+            }
             this.students = data;
           });
         this.schoolService.getSubjects()
@@ -108,8 +112,9 @@ export class GradesComponent implements OnInit {
       this.isTeacher = role === "Teacher";
       this.isAdmin = role == "Director" || role == "Admin";
       this.isStudent = role === "Student";
+      this.isParent = role === "Parent";
       let parse = JSON.parse(localStorage.getItem('currentUser'));
-      console.log(parse.username);
+      console.log(this.isParent);
       resolve(parse.username);
     })
   }

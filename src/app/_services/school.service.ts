@@ -14,7 +14,7 @@ export class SchoolService {
 
 
   addSchool(school: School) {
-    return this.http.post(`${environment.apiUrl}/school`, school, {responseType: 'text'});
+    return this.http.post(`${environment.apiUrl}/school`, school);
   }
 
   updateSchool(school: School) {

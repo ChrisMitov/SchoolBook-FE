@@ -3,6 +3,7 @@ import {first} from 'rxjs/operators';
 import {SchoolService} from "../_services/school.service";
 import {School} from "../_models/school";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Router} from "@angular/router";
 
 
 @Component({templateUrl: 'school.component.html'})
@@ -11,7 +12,7 @@ export class SchoolComponent implements OnInit {
   newSchool: School;
   chosenSchool: School;
 
-  constructor(private schoolService: SchoolService, private modalService: NgbModal) {
+  constructor(private schoolService: SchoolService, private modalService: NgbModal, private route: Router) {
     this.newSchool = new School();
   }
 
@@ -56,5 +57,9 @@ export class SchoolComponent implements OnInit {
       .subscribe(() => {
         this.getSchools();
       })
+  }
+
+  showInfo(id: number) {
+    this.route.navigate(['/users']);
   }
 }

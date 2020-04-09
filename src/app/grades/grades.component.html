@@ -24,8 +24,8 @@
       </div>
     </div>
 
-    <div class="col-md-7" *ngIf="isTeacher || isAdmin">
-      <div *ngIf="isTeacher || isAdmin">
+    <div class="col-md-7" *ngIf="isTeacher || isAdmin || isParent">
+      <div *ngIf="isTeacher || isAdmin || isParent">
         <div class="form-group">
           <label for="station-text2" class="col-form-label">Choose student: </label>
           <div ngbDropdown class="d-inline-block">
@@ -60,12 +60,12 @@
               <td>{{ grade.subject }}</td>
               <td>{{grade.grade}}</td>
               <td>
-                <button type="button" class="btn btn-warning" *ngIf="teacherSubject == grade.subject"
+                <button type="button" class="btn btn-warning" *ngIf="teacherSubject == grade.subject || isAdmin"
                         (click)="openEditModal(content1, grade)"><i class="fa fa-pencil"
                                                                     aria-hidden="true"></i></button>
               </td>
               <td>
-                <button type="button" class="btn btn-danger" (click)="delete(grade.id)"
+                <button type="button" class="btn btn-danger" (click)="delete(grade.id)" *ngIf="teacherSubject == grade.subject || isAdmin"
                         placement="top" ngbTooltip="Delete grade"><i class="fa fa-trash"
                                                                                aria-hidden="true"></i>
                 </button>

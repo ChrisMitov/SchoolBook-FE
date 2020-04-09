@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.userService.getAllRoles()
       .subscribe(data => {
-        this.roles = data;
+        this.roles = data.filter(item => item != 'Director')
       })
   }
 
